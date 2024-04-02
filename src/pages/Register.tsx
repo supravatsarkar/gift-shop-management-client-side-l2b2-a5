@@ -1,32 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, FormProps } from "antd";
 import { useForm, SubmitHandler, FieldValue } from "react-hook-form";
-import { useLoginMutation } from "../redux/features/auth/authApi";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../redux/features/auth/authApi";
 import { toast } from "sonner";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
 import { decodeJwtToken } from "../utils";
 import { NavLink, useNavigate } from "react-router-dom";
+import { roles } from "../config/constants";
 
-export type TLoginCreds = {
+export type TRegisterData = {
+  name: string;
   email: string;
+  phone: string;
   password: string;
+  password2: string;
 };
-export default function Login() {
+export default function Register() {
   const defaultValue = {
     email: "supravat.sarkar@yopmail.com",
     password: "Qwerty@123",
+    name: "Supravat Sarkar",
+    phone: "9851650495",
   };
-  // const { register, handleSubmit, formState } = useForm<TLoginCreds>({
-  //   defaultValues: {
-  //     ...defaultValue,
-  //   },
-  // });
-  const [login, { data, isLoading, isError, error }] = useLoginMutation();
+
+  const [register, { data, isLoading, isError, error }] = useRegisterMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   console.log({ data, error });
-  const submitHandler: SubmitHandler<TLoginCreds> = async (data) => {
+  const submitHandler: FormProps<TRegisterData>["onFinish"] = async (data) => {
     console.log("data", data);
     const toastId = toast.promise(new Promise((resolve, reject) => {}), {
       loading: "Loading...",
@@ -34,24 +39,18 @@ export default function Login() {
 
     console.log({ toastId });
     try {
-      const loginRes = await login({
+      const registerRes = await register({
+        role: roles.manager,
+        name: data.name,
         email: data.email,
+        phone: data.phone,
         password: data.password,
       }).unwrap();
-      // let loginRes = await fetch("http://localhost:5000/api/v1/auth/login", {
-      //   method: "POST",
-      //   credentials: "include",
-      //   headers: {
-      //     "content-type": "application/json",
-      //   },
-      //   body: JSON.stringify({ email: data.email, password: data.password }),
-      // });
-      // loginRes = await loginRes.json();
-      console.log("Login res", loginRes);
-      const token = loginRes?.data?.accessToken;
+      console.log("registerRes res", registerRes);
+      const token = registerRes?.data?.accessToken;
       const decodedData = decodeJwtToken(token);
       dispatch(setUser({ user: decodedData, token: token }));
-      toast.success("Login Success!", { id: toastId });
+      toast.success("Register Success!", { id: toastId });
       if (decodedData.role !== "customer") {
         navigate(`/admin`);
       } else {
@@ -89,35 +88,6 @@ export default function Login() {
         }}
       >
         <h2>Gift Shop Management System </h2>
-        {/* <form
-        onSubmit={handleSubmit(submitHandler)}
-        style={{
-          marginTop: "20px",
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
-        <input
-          type="text"
-          {...register("email", { required: true })}
-          placeholder="email"
-        />
-        {formState.errors.email && (
-          <p style={{ color: "red" }}>Email is required</p>
-        )}
-        <input
-          type="text"
-          {...register("password", { required: true })}
-          placeholder="password"
-        />
-        {formState.errors.password && (
-          <p style={{ color: "red" }}>Password is required</p>
-        )}
-
-        <Button htmlType="submit">Login</Button>
-      </form> */}
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -128,38 +98,74 @@ export default function Login() {
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item<TLoginCreds>
+          <Form.Item<TRegisterData>
+            label="Name"
+            name="name"
+            initialValue={defaultValue.name}
+            rules={[
+              {
+                required: true,
+                message: "Please input your Name!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item<TRegisterData>
             label="Email"
             name="email"
             initialValue={defaultValue.email}
             rules={[
               {
                 required: true,
-                message: "Please input your username!",
+                message: "Please input your email!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item<TRegisterData>
+            label="Phone"
+            name="phone"
+            initialValue={defaultValue.phone}
+            rules={[
+              {
+                required: true,
+                message: "Please input your phone number!",
               },
             ]}
           >
             <Input />
           </Form.Item>
 
-          <Form.Item<TLoginCreds>
+          <Form.Item<TRegisterData>
             label="Password"
             name="password"
             initialValue={defaultValue.password}
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[{ required: true, message: "Please enter your password!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item<TRegisterData>
+            label="Password"
+            name="password2"
+            initialValue={defaultValue.password}
+            rules={[
+              { required: true, message: "Please reenter your password!" },
+            ]}
           >
             <Input.Password />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" htmlType="submit">
-              Login
+              Register
             </Button>
           </Form.Item>
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <NavLink to="/register">
+            <NavLink to="/login">
               <Button type="primary" htmlType="submit">
-                Register
+                Login
               </Button>
             </NavLink>
           </Form.Item>

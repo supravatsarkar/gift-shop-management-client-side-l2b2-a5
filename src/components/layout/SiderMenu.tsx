@@ -11,11 +11,15 @@ import {
 } from "@ant-design/icons";
 import { sidebarMenuGenerator } from "../../utils/sidebarMenuGenerator";
 import adminPaths from "../../routes/admin.path";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../hooks/hooks";
+import managerPaths from "../../routes/manager.path";
+import { roles } from "../../config/constants";
 export type MenuItem = Required<MenuProps>["items"][number];
 
 const { Header, Sider, Content } = Layout;
-const role = "admin";
-const items = sidebarMenuGenerator(adminPaths, role);
+
 // const items: MenuItem[] = [
 //   {
 //     label: <NavLink to={`/${role}`}>Dashboard</NavLink>,
@@ -54,6 +58,23 @@ const items = sidebarMenuGenerator(adminPaths, role);
 // ];
 
 const SiderMenu = () => {
+  const user = useAppSelector((state) => state.auth.user);
+  const role = user?.role as string;
+  let items;
+  switch (role) {
+    case roles.admin:
+      items = sidebarMenuGenerator(adminPaths, role);
+      break;
+    case roles.manager:
+      items = sidebarMenuGenerator(managerPaths, role);
+      break;
+    // case roles.customer:
+    //   items = sidebarMenuGenerator(customerPaths, role);
+    //   break;
+    default:
+      items = sidebarMenuGenerator(adminPaths, role);
+      break;
+  }
   return (
     <Sider
       trigger={null}

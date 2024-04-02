@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import type { MenuProps } from "antd";
-import { Button, Layout, Menu } from "antd";
+import { Badge, Button, Layout, Menu } from "antd";
 import SiderMenu from "./SiderMenu";
 import {
   Link,
@@ -23,6 +23,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { logout } from "../../redux/features/auth/authSlice";
+import { useGetUserQuery } from "../../redux/features/auth/authApi";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -31,6 +32,8 @@ const MainLayout = () => {
   const location = useLocation();
   console.log({ location });
   const user = useSelector((state: RootState) => state.auth.user);
+  const { data: userDetails } = useGetUserQuery(undefined);
+  console.log({ userDetails });
   const dispatch = useDispatch();
 
   //   const {
@@ -50,7 +53,7 @@ const MainLayout = () => {
             padding: 0,
             background: "#fff",
             display: "flex",
-            justifyContent: "space-around",
+            justifyContent: "space-between",
             alignItems: "center",
           }}
         >
@@ -64,7 +67,18 @@ const MainLayout = () => {
               height: 64,
             }}
           />
-          <p>{user?.email}</p>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignContent: "center",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <p>{user?.email}</p>
+            <Badge count={user?.role} />
+          </div>
           <Button onClick={() => dispatch(logout())}>Logout</Button>
         </Header>
         <Content

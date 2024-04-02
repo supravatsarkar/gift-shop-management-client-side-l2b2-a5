@@ -4,6 +4,8 @@ import { routeGenerator } from "../utils/routeGenerator";
 import adminPaths from "./admin.path";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import Register from "../pages/Register";
+import managerPaths from "./manager.path";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,12 +53,17 @@ const router = createBrowserRouter([
     children: routeGenerator(adminPaths),
   },
   {
+    path: "manager",
+    element: <ProtectedRoute children={<App />} />,
+    children: routeGenerator(managerPaths),
+  },
+  {
     path: "/login",
     element: <Login />,
   },
   {
     path: "/register",
-    element: <div>Register Page</div>,
+    element: <Register />,
   },
 ]);
 

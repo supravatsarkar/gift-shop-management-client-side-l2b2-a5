@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { TRoutePath } from "../types";
 import Dashboard from "../pages/admin/Dashboard";
+import Managers from "../pages/admin/userManagement/Managers";
 
 const routeGenerator = (paths: TRoutePath[]) => {
   return paths.map((item) => {});
@@ -13,15 +14,25 @@ const adminPaths: TRoutePath[] = [
     element: <Dashboard />,
   },
   {
-    name: "Shop Management",
-    path: "shop-management",
+    name: "User Management",
+    path: "user-management",
     children: [
       {
-        name: "test sub",
-        path: "test-sub",
-        element: <div>Test sub item</div>,
+        name: "Managers",
+        path: "managers",
+        element: <Managers />,
+      },
+      {
+        name: "Customers",
+        path: "customers",
+        element: <div>Get all customers</div>,
       },
     ],
+  },
+  {
+    name: "Shop Management",
+    path: "shop-management",
+    element: <div>Shop Management</div>,
   },
   {
     name: "Sales Management",

@@ -1,9 +1,12 @@
 import React from "react";
-import { useGetUsersQuery } from "../../redux/features/auth/authApi";
+import { useGetUserQuery } from "../../redux/features/auth/authApi";
+import { useGetMangersQuery } from "../../redux/features/admin/adminApi";
 
 export default function Dashboard() {
-  const { data, isError, isLoading, isSuccess } = useGetUsersQuery(undefined);
-  console.log("get user rtk ==>", { data, isError, isLoading, isSuccess });
+  // const { data, isError, isLoading, isSuccess } = useGetUserQuery(undefined);
+  // // const { data: Managers } = useGetMangersQuery(undefined);
+  // // console.log("managers from dashboard", Managers);
+  // console.log("get user rtk ==>", { data, isError, isLoading, isSuccess });
   return (
     <div
     // style={{

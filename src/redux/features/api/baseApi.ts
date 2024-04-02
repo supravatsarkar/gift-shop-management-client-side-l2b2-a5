@@ -18,7 +18,7 @@ const baseQuery = fetchBaseQuery({
     }
     return hearders;
   },
-  credentials: "include", // AVAILABLE VALUES "same-origin", "include" , "omit"
+  // credentials: "include", // AVAILABLE VALUES "same-origin", "include" , "omit"
   baseUrl: "http://localhost:5000/api/v1",
 });
 
@@ -50,12 +50,17 @@ const baseQueryWithRefreshToken: BaseQueryFn<
     }
   }
 
+  console.log("data from custom baseQuery", data);
+
   return data;
 };
 
 export const baseApi = createApi({
   reducerPath: "baseApi",
+  keepUnusedDataFor: 20,
+  // refetchOnMountOrArgChange: 20,
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ["products"],
   // baseQuery: fetchBaseQuery({
   //   prepareHeaders: (hearders, { getState }) => {
   //     const token = (getState() as RootState).auth.token as string;
