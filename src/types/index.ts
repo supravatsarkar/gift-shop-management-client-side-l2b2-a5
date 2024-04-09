@@ -22,3 +22,18 @@ export type TSidebarItem = {
   icon: ReactNode;
   children?: TSidebarItem[];
 };
+
+export interface TProduct {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  occasion: string;
+  recipient: string;
+  category: string;
+  theme: string;
+  brand: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedAt: Date;
+}

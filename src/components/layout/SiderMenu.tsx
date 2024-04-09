@@ -57,7 +57,7 @@ const { Header, Sider, Content } = Layout;
 //   },
 // ];
 
-const SiderMenu = () => {
+const SiderMenu = ({ collapsed }: { collapsed: boolean }) => {
   const user = useAppSelector((state) => state.auth.user);
   const role = user?.role as string;
   let items;
@@ -79,7 +79,7 @@ const SiderMenu = () => {
     <Sider
       trigger={null}
       // collapsible
-      // collapsed={collapsed}
+      collapsed={collapsed}
       // breakpoint="lg"
       // collapsedWidth="0"
       // onBreakpoint={(broken) => {

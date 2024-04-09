@@ -60,7 +60,7 @@ export const baseApi = createApi({
   keepUnusedDataFor: 20,
   // refetchOnMountOrArgChange: 20,
   baseQuery: baseQueryWithRefreshToken,
-  tagTypes: ["products"],
+  tagTypes: ["products", "sales"],
   // baseQuery: fetchBaseQuery({
   //   prepareHeaders: (hearders, { getState }) => {
   //     const token = (getState() as RootState).auth.token as string;

@@ -46,7 +46,7 @@ const MainLayout = () => {
         height: "100vh",
       }}
     >
-      <SiderMenu />
+      <SiderMenu collapsed={collapsed} />
       <Layout>
         <Header
           style={{
