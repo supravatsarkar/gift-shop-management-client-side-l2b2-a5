@@ -28,6 +28,8 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
   const saleHandler: SubmitHandler<TSalePayload> = async (data) => {
     console.log("saleHandler=>", data);
     data.quantity = Number(data.quantity);
+    // data.dateOfSale = new Date(data.dateOfSale).toISOString();
+    console.log("dateOfSale=>", data.dateOfSale);
     try {
       const response = await markAsSaleSubmit({
         productId: product._id,
@@ -154,9 +156,16 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
                 </div>
               </fieldset>
             </div>
-            <Button size="sm" color="secondary" type="submit">
-              Submit
-            </Button>
+            <div className="flex justify-around">
+              <Button
+                size="sm"
+                color="secondary"
+                type="submit"
+                className="text-center"
+              >
+                Submit
+              </Button>
+            </div>
           </form>
         </ModalComponent>
       </Card.Content>

@@ -3,12 +3,14 @@ import { TRoutePath } from "../types";
 import Dashboard from "../pages/admin/Dashboard";
 import ShopManagement from "../pages/ShopManagement";
 import {
+  ChartBar,
   ChartBarHorizontal,
   Gauge,
   ShoppingBagOpen,
   Tag,
 } from "phosphor-react";
 import SalesManagement from "@/pages/SalesManagement";
+import SalesHistory from "@/pages/SalesHistory";
 
 // const routeGenerator = (paths: TRoutePath[]) => {
 //   return paths.map((item) => {});
@@ -36,8 +38,8 @@ const managerPaths: TRoutePath[] = [
   {
     name: "Sales History",
     path: "sales-history",
-    icon: <ChartBarHorizontal size={15} />,
-    element: <div>Sales History</div>,
+    icon: <ChartBar size={15} />,
+    element: <SalesHistory />,
   },
 ];
 
