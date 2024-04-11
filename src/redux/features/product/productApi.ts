@@ -41,7 +41,12 @@ const productApi = baseApi.injectEndpoints({
         sortby: string;
         filter: Record<string, unknown>;
       }) => {
-        console.log("getAllActiveProducts RTK", { limit, page, filter });
+        console.log("getAllActiveProducts RTK", {
+          limit,
+          page,
+          filter,
+          sortby,
+        });
         let url = `/product/get-all-active-products?limit=${limit}&page=${page}&sortby=${sortby}`;
         if (Object.keys(filter).length) {
           url = url.concat(

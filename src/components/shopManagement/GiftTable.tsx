@@ -64,7 +64,7 @@ export default function GiftTable() {
       limit: limit,
       page: page,
       filter: filter,
-      sortby: "desc",
+      sortby: "createdAt",
     });
   console.log("isFetching=>", isFetching);
   const products: TProduct[] = data?.data?.products || [];

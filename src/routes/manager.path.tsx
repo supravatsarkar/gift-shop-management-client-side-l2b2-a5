@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { TRoutePath } from "../types";
-import Dashboard from "../pages/admin/Dashboard";
+import Dashboard from "../pages/Dashboard";
 import ShopManagement from "../pages/ShopManagement";
 import {
   ChartBar,

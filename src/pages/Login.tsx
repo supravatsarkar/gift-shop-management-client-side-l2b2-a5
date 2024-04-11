@@ -53,7 +53,7 @@ export default function Login() {
       dispatch(setUser({ user: decodedData, token: token }));
       toast.success("Login Success!", { id: toastId });
       if (decodedData.role !== "customer") {
-        navigate(`/admin`);
+        navigate(`/${decodedData.role}`);
       } else {
         navigate(`/customer`);
       }

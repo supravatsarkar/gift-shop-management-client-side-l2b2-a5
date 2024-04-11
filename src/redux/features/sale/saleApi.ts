@@ -43,6 +43,15 @@ const saleApi = baseApi.injectEndpoints({
       },
       providesTags: ["sales"],
     }),
+    getDashboardSummery: builder.query({
+      query: () => {
+        return {
+          url: `/user/get-dashboard-summery`,
+          method: "GET",
+        };
+      },
+      providesTags: ["sales", "products"],
+    }),
   }),
   //   overrideExisting: true,
 });
@@ -51,4 +60,5 @@ export const {
   useMarkAsSaleMutation,
   useGetSalesQuery,
   useGetSalesHistoryGraphQuery,
+  useGetDashboardSummeryQuery,
 } = saleApi;

@@ -1,7 +1,11 @@
 import { ReactNode } from "react";
 import { TRoutePath } from "../types";
-import Dashboard from "../pages/admin/Dashboard";
+import Dashboard from "../pages/Dashboard";
 import Managers from "../pages/admin/userManagement/Managers";
+import SalesHistory from "@/pages/SalesHistory";
+import { ChartBar, Gauge, ShoppingBagOpen, Tag, Users } from "phosphor-react";
+import SalesManagement from "@/pages/SalesManagement";
+import ShopManagement from "@/pages/ShopManagement";
 
 const routeGenerator = (paths: TRoutePath[]) => {
   return paths.map((item) => {});
@@ -10,12 +14,13 @@ const adminPaths: TRoutePath[] = [
   {
     name: "Dashboard",
     path: "",
-    // index: true,
+    icon: <Gauge size={15} />,
     element: <Dashboard />,
   },
   {
     name: "User Management",
     path: "user-management",
+    icon: <Users size={15} />,
     children: [
       {
         name: "Managers",
@@ -32,17 +37,20 @@ const adminPaths: TRoutePath[] = [
   {
     name: "Shop Management",
     path: "shop-management",
-    element: <div>Shop Management</div>,
+    icon: <ShoppingBagOpen size={15} />,
+    element: <ShopManagement />,
   },
   {
     name: "Sales Management",
     path: "sales-management",
-    element: <div>Sales Management</div>,
+    icon: <Tag size={15} />,
+    element: <SalesManagement />,
   },
   {
     name: "Sales History",
     path: "sales-history",
-    element: <div>Sales History</div>,
+    icon: <ChartBar size={15} />,
+    element: <SalesHistory />,
   },
 ];
 
