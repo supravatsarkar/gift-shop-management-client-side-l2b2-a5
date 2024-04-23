@@ -72,6 +72,7 @@ export default function Login() {
       }}
     >
       <div
+        // className="m-20 p-30 text-center rounded-xl"
         style={{
           // border: "2px solid gray",
           margin: "20px",
@@ -89,35 +90,6 @@ export default function Login() {
         }}
       >
         <h2>Gift Shop Management System </h2>
-        {/* <form
-        onSubmit={handleSubmit(submitHandler)}
-        style={{
-          marginTop: "20px",
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-        }}
-      >
-        <input
-          type="text"
-          {...register("email", { required: true })}
-          placeholder="email"
-        />
-        {formState.errors.email && (
-          <p style={{ color: "red" }}>Email is required</p>
-        )}
-        <input
-          type="text"
-          {...register("password", { required: true })}
-          placeholder="password"
-        />
-        {formState.errors.password && (
-          <p style={{ color: "red" }}>Password is required</p>
-        )}
-
-        <Button htmlType="submit">Login</Button>
-      </form> */}
         <Form
           name="basic"
           labelCol={{ span: 8 }}

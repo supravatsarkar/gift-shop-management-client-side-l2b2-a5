@@ -29,6 +29,18 @@ const productApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["products"],
     }),
+    deleteBulkProduct: builder.mutation({
+      query: (ids: string[]) => {
+        return {
+          url: `product/delete-bulk-product`,
+          method: "DELETE",
+          body: {
+            ids: ids,
+          },
+        };
+      },
+      invalidatesTags: ["products"],
+    }),
     getAllActiveProducts: builder.query({
       query: ({
         limit,
@@ -47,7 +59,7 @@ const productApi = baseApi.injectEndpoints({
           filter,
           sortby,
         });
-        let url = `/product/get-all-active-products?limit=${limit}&page=${page}&sortby=${sortby}`;
+        let url = `/product/get-all-active-products?limit=${limit}&page=${page}&sortby=${sortby}&order=desc`;
         if (Object.keys(filter).length) {
           url = url.concat(
             `&${Object.keys(filter)[0]}=${Object.values(filter)[0]}`
@@ -63,7 +75,7 @@ const productApi = baseApi.injectEndpoints({
     }),
     getAllProducts: builder.query({
       query: () => ({
-        url: "/product/get-all-products",
+        url: "/product/get-all-products?order=desc",
         method: "GET",
       }),
       providesTags: ["products"],
@@ -81,7 +93,7 @@ const productApi = baseApi.injectEndpoints({
         search: string;
       }) => {
         console.log("getInventory RTK", { limit, page, search });
-        let url = `/product/get-inventory?limit=${limit}&page=${page}&sortby=${sortby}`;
+        let url = `/product/get-inventory?limit=${limit}&page=${page}&sortby=${sortby}&order=desc`;
         if (search) {
           url = `${url}&search=${search}`;
         }
@@ -102,5 +114,6 @@ export const {
   useAddProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
+  useDeleteBulkProductMutation,
   useGetInventoryQuery,
 } = productApi;

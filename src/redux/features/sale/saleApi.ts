@@ -10,30 +10,6 @@ const saleApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["sales"],
     }),
-    getSales: builder.query({
-      query: ({
-        limit,
-        page,
-        sortby,
-        search,
-      }: {
-        limit: number;
-        page: number;
-        sortby: string;
-        search: string;
-      }) => {
-        console.log("getInventory RTK", { limit, page, search });
-        let url = `/product/get-inventory?limit=${limit}&page=${page}&sortby=${sortby}`;
-        if (search) {
-          url = `${url}&search=${search}`;
-        }
-        return {
-          url: url,
-          method: "GET",
-        };
-      },
-      providesTags: ["sales"],
-    }),
     getSalesHistoryGraph: builder.query({
       query: ({ category, year }) => {
         return {
@@ -58,7 +34,6 @@ const saleApi = baseApi.injectEndpoints({
 
 export const {
   useMarkAsSaleMutation,
-  useGetSalesQuery,
   useGetSalesHistoryGraphQuery,
   useGetDashboardSummeryQuery,
 } = saleApi;
