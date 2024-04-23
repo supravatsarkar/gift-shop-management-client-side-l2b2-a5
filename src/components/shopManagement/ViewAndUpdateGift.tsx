@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ModalComponent } from "@/components/reusesable/ModalComponent";
 import {
   useAddProductMutation,
@@ -19,6 +20,7 @@ import { totalmem } from "os";
 import {
   ArrowsDownUp,
   Cake,
+  Copy,
   Crown,
   Cube,
   CurrencyDollar,
@@ -57,12 +59,14 @@ export default function ViewAndUpdateGift({
     defaultValues: { ...productData },
   });
   const [isUpdateModal, setIsUpdateModal] = useState(false);
+  const [isNewVariantModal, setIsNewVariantModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
+  const [addNewVariant] = useAddProductMutation();
 
   const updateGift: SubmitHandler<Partial<TProduct>> = async (data) => {
-    console.log("addGift raw data=>", data);
+    console.log("update raw data=>", data);
 
     const payload: Partial<TProduct> = {};
     data.name ? (payload.name = data.name) : null;
@@ -73,8 +77,27 @@ export default function ViewAndUpdateGift({
     data.occasion ? (payload.occasion = data.occasion) : null;
     data.recipient ? (payload.recipient = data.recipient) : null;
     data.theme ? (payload.theme = data.theme) : null;
-    const response = await updateProduct({ id: data._id, payload }).unwrap();
-    // const newProduct = await response.json();
+    try {
+      const response = await updateProduct({ id: data._id, payload }).unwrap();
+      // const newProduct = await response.json();
+      console.log("response=>", response);
+      if (response.statusCode >= 200 && response.statusCode <= 299) {
+        setIsModalOpen(false);
+        toast.success(response.message);
+        reset();
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error: any) {
+      // console.log("error", error);
+      toast.error(error?.data?.message);
+    }
+  };
+  const deleteGift = async (id: string) => {
+    console.log("delete gift=>", id);
+    const isConfirm = confirm(`Are you sure?`);
+    if (!isConfirm) return;
+    const response = await deleteProduct(id).unwrap();
     console.log("response=>", response);
     if (response.statusCode >= 200 && response.statusCode <= 299) {
       setIsModalOpen(false);
@@ -84,16 +107,24 @@ export default function ViewAndUpdateGift({
       toast.error(response.message);
     }
   };
-  const deleteGift = async (id: string) => {
-    console.log("delete gift=>", id);
-    const response = await deleteProduct(id).unwrap();
-    console.log("response=>", response);
-    if (response.statusCode >= 200 && response.statusCode <= 299) {
-      setIsModalOpen(false);
-      toast.success(response.message);
-      reset();
-    } else {
-      toast.error(response.message);
+
+  const createNewVariant: SubmitHandler<Partial<TProduct>> = async (data) => {
+    delete data._id;
+    data.price = Number(data.price);
+    data.quantity = Number(data.quantity);
+    try {
+      const response = await addNewVariant(data).unwrap();
+      console.log("new variant response=>", response);
+      if (response.statusCode >= 200 && response.statusCode <= 299) {
+        setIsModalOpen(false);
+        toast.success("New variant created successfully!");
+        reset();
+      } else {
+        toast.error(response.message);
+      }
+    } catch (error: any) {
+      // console.log("error", error);
+      toast.error(error?.data?.message);
     }
   };
 
@@ -112,13 +143,14 @@ export default function ViewAndUpdateGift({
           </p>
         }
       >
-        <div className="flex gap-2 m-2 flex-row-reverse">
+        <div className="flex gap-2 m-2 flex-row-reverse items-center">
           <Button
             color="secondary"
             shape="circle"
             onClick={() => {
               setIsModalOpen(false);
               setIsUpdateModal(false);
+              setIsNewVariantModal(false);
             }}
           >
             <X size={20} />
@@ -134,11 +166,21 @@ export default function ViewAndUpdateGift({
           <Button
             color="secondary"
             shape="circle"
-            onClick={() => setIsUpdateModal(true)}
+            onClick={() => setIsUpdateModal(!isUpdateModal)}
           >
             <Pen size={20} />
           </Button>
+          <Button
+            color="secondary"
+            // shape="circle"
+            onClick={() => setIsNewVariantModal(!isNewVariantModal)}
+            className="rounded-xl p-3"
+          >
+            <Copy size={20} className="mr-1" />
+            Create Variant
+          </Button>
         </div>
+
         <form
           className="mx-auto max-w-lg space-y-2 rounded-xl  p-3  border bottom-1"
           onSubmit={handleSubmit(updateGift)}
@@ -151,7 +193,7 @@ export default function ViewAndUpdateGift({
                   placeholder="Enter gift name"
                   className="ps-11"
                   {...register("name", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Gift size={15} color="#AFBACA" />
@@ -164,10 +206,10 @@ export default function ViewAndUpdateGift({
                 <Input
                   id="price"
                   placeholder="Enter Price of Gift"
-                  type="decimal"
+                  type="number"
                   className="ps-11"
                   {...register("price", { required: true, min: 1 })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <CurrencyDollar size={15} color="#AFBACA" />
@@ -183,7 +225,7 @@ export default function ViewAndUpdateGift({
                   type="number"
                   className="ps-11"
                   {...register("quantity", { required: true, min: 1 })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Equals size={15} color="#AFBACA" />
@@ -199,7 +241,7 @@ export default function ViewAndUpdateGift({
                   type="text"
                   className="ps-11"
                   {...register("occasion", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Cake size={15} color="#AFBACA" />
@@ -215,7 +257,7 @@ export default function ViewAndUpdateGift({
                   type="text"
                   className="ps-11"
                   {...register("recipient", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Cake size={15} color="#AFBACA" />
@@ -231,7 +273,7 @@ export default function ViewAndUpdateGift({
                   type="text"
                   className="ps-11"
                   {...register("category", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Cake size={15} color="#AFBACA" />
@@ -247,7 +289,7 @@ export default function ViewAndUpdateGift({
                   type="text"
                   className="ps-11"
                   {...register("theme", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Cake size={15} color="#AFBACA" />
@@ -263,7 +305,7 @@ export default function ViewAndUpdateGift({
                   type="text"
                   className="ps-11"
                   {...register("brand", { required: true })}
-                  disabled={isUpdateModal ? false : true}
+                  disabled={isUpdateModal || isNewVariantModal ? false : true}
                 />
                 <Icon>
                   <Cake size={15} color="#AFBACA" />
@@ -274,6 +316,16 @@ export default function ViewAndUpdateGift({
           {isUpdateModal && (
             <Button size="sm" color="secondary" type="submit">
               Update
+            </Button>
+          )}
+          {isNewVariantModal && (
+            <Button
+              onClick={handleSubmit(createNewVariant)}
+              size="sm"
+              color="secondary"
+              type="submit"
+            >
+              Create Variant
             </Button>
           )}
         </form>
