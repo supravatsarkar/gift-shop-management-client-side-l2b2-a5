@@ -14,16 +14,21 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMarkAsSaleMutation } from "@/redux/features/sale/saleApi";
 import { toast } from "sonner";
+import moment from "moment";
 
 type TSalePayload = {
   quantity: number;
   buyerName: string;
-  dateOfSale: Date;
+  dateOfSale: string;
 };
 
 export const ProductCard = ({ product }: { product: TProduct }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { handleSubmit, register, reset } = useForm<TSalePayload>();
+  const { handleSubmit, register, reset } = useForm<TSalePayload>({
+    defaultValues: {
+      dateOfSale: moment().format("YYYY-MM-DD"),
+    },
+  });
   const [markAsSaleSubmit] = useMarkAsSaleMutation();
   const saleHandler: SubmitHandler<TSalePayload> = async (data) => {
     console.log("saleHandler=>", data);
@@ -146,9 +151,11 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
                 <div className="relative">
                   <Input
                     type="date"
+                    max={moment().format("YYYY-MM-DD")}
                     placeholder="Chose date of sale"
                     className="ps-11"
                     {...register("dateOfSale", { required: true })}
+                    // defaultValue={ moment().format("YYYY-MM-DD")}
                   />
                   <Icon>
                     <Calendar size={15} color="#AFBACA" />
