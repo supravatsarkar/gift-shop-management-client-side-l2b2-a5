@@ -9,7 +9,7 @@ import {
 import { RootState } from "../../store";
 import { logout, setUser } from "../auth/authSlice";
 import { decodeJwtToken } from "../../../utils";
-const BASE_URL = "https://gift-shop-management-server-beige.vercel.app/";
+const BASE_URL = "https://gift-shop-management-server-beige.vercel.app";
 
 const baseQuery = fetchBaseQuery({
   prepareHeaders: (hearders, { getState }) => {
