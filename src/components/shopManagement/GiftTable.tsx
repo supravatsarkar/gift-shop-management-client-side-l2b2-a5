@@ -15,6 +15,7 @@ import {
   Input,
   Label,
   Popover,
+  Skeleton,
   Table,
 } from "keep-react";
 import { totalmem } from "os";
@@ -148,8 +149,8 @@ export default function GiftTable() {
   };
 
   return (
-    <div>
-      {isFetching && <h3>Loading...</h3>}
+    <div className="w-100">
+      {/* {isFetching && <h3>Loading...</h3>} */}
       <Table
         // showCheckbox={true}
         className="mt-1"
@@ -200,6 +201,22 @@ export default function GiftTable() {
                   </Icon>
                 </fieldset>
               </div>
+              <div className="text-left">
+                {selectedIds.length > 0 && (
+                  <Button
+                    color="error"
+                    // variant="link"
+                    disabled={selectedIds.length <= 0 ? true : false}
+                    onClick={handleBulkDelete}
+                    className="p-2 rounded-xl"
+                  >
+                    <span className="pr-2">
+                      <Trash size={20} />
+                    </span>
+                    Delete {selectedIds.length} Items
+                  </Button>
+                )}
+              </div>
             </div>
             <div className="flex items-center gap-5">
               {/*               
@@ -211,83 +228,79 @@ export default function GiftTable() {
               </Button> */}
             </div>
           </div>
-          <div className="text-left">
-            {selectedIds.length > 0 && (
-              <Button
-                color="error"
-                variant="link"
-                disabled={selectedIds.length <= 0 ? true : false}
-                onClick={handleBulkDelete}
-                className="p-2"
-              >
-                <span className="pr-2">
-                  <Trash size={20} />
-                </span>
-                Delete Selected {selectedIds.length} Items
-              </Button>
-            )}
-          </div>
+
+          {isFetching && (
+            <Skeleton className="w-full space-y-2.5">
+              <Skeleton.Line className="h-4 w-full" />
+              <Skeleton.Line className="h-4 w-full" />
+              <Skeleton.Line className="h-4 w-full" />
+              <Skeleton.Line className="h-4 w-full" />
+              <Skeleton.Line className="h-10 w-full" />
+            </Skeleton>
+          )}
         </Table.Caption>
-        <Table.Head>
-          <Table.HeadCell
-            icon={<CheckCircle size={14} color="#8897AE" />}
-          ></Table.HeadCell>
-          <Table.HeadCell className="min-w-[150px]">
-            <p className="text-body-5 font-medium text-metal-400">Name</p>
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[70px] "
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            <div className="flex flex-col">
-              <p className="text-body-5 font-medium text-metal-500">Price</p>
-              {/* <p className="text-body-6 font-normal text-metal-500">Quantity</p> */}
-            </div>
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[70px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Quantity
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[70px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Occasion
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[100px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Recipient
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[100px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Category
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[100px"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Theme
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[100px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Brand
-          </Table.HeadCell>
-          <Table.HeadCell
-            className="min-w-[100px]"
-            // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-          >
-            Created At
-          </Table.HeadCell>
-          {/* <Table.HeadCell className="min-w-[100px]" /> */}
-        </Table.Head>
+        {!isFetching && (
+          <Table.Head>
+            <Table.HeadCell
+              icon={<CheckCircle size={14} color="#8897AE" />}
+            ></Table.HeadCell>
+            <Table.HeadCell className="min-w-[150px]">
+              <p className="text-body-5 font-medium text-metal-400">Name</p>
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[70px] "
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              <div className="flex flex-col">
+                <p className="text-body-5 font-medium text-metal-500">Price</p>
+                {/* <p className="text-body-6 font-normal text-metal-500">Quantity</p> */}
+              </div>
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[70px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Quantity
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[70px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Occasion
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[100px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Recipient
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[100px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Category
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[100px"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Theme
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[100px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Brand
+            </Table.HeadCell>
+            <Table.HeadCell
+              className="min-w-[100px]"
+              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+            >
+              Created At
+            </Table.HeadCell>
+            {/* <Table.HeadCell className="min-w-[100px]" /> */}
+          </Table.Head>
+        )}
 
         <Table.Body className="divide-gray-25 divide-y">
           {products.map((item) => (
@@ -312,7 +325,7 @@ export default function GiftTable() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       {/* <Avatar img="/images/company/paypal.png" /> */}
-                      <div>
+                      <div onClick={() => setSelectedIds([])}>
                         {/* {productActionDropDownList(
                           <p className="-mb-0.5 text-body-4 font-medium text-blue-600 hover:underline cursor-pointer">
                             {item.name}

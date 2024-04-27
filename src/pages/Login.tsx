@@ -28,7 +28,7 @@ export default function Login() {
   console.log({ data, error });
   const submitHandler: SubmitHandler<TLoginCreds> = async (data) => {
     console.log("data", data);
-    const toastId = toast.promise(new Promise((resolve, reject) => {}), {
+    const toastId = toast.promise(new Promise(() => {}), {
       loading: "Loading...",
     });
 

@@ -5,9 +5,9 @@ import { Space, Table, TableProps, Tag } from "antd";
 interface DataType {
   id: string;
   name: string;
-  email: number;
-  phone: number;
-  createdAt: Date;
+  email: string;
+  phone: string;
+  createdAt: Date | string;
   isDeleted: boolean;
 }
 
@@ -63,7 +63,6 @@ export default function Managers() {
   const items: DataType[] = managers?.length
     ? managers.map((item) => ({
         ...item,
-        isDeleted: item.isDeleted ? "Yes" : "No",
         createdAt: new Date(item.createdAt).toDateString(),
       }))
     : [];

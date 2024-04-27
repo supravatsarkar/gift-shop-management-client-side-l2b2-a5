@@ -8,7 +8,7 @@ import SalesManagement from "@/pages/SalesManagement";
 import ShopManagement from "@/pages/ShopManagement";
 
 const routeGenerator = (paths: TRoutePath[]) => {
-  return paths.map((item) => {});
+  return paths.map(() => {});
 };
 const adminPaths: TRoutePath[] = [
   {

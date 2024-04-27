@@ -9,6 +9,7 @@ import {
 import { RootState } from "../../store";
 import { logout, setUser } from "../auth/authSlice";
 import { decodeJwtToken } from "../../../utils";
+const BASE_URL = "https://gift-shop-management-server-beige.vercel.app/";
 
 const baseQuery = fetchBaseQuery({
   prepareHeaders: (hearders, { getState }) => {
@@ -19,7 +20,7 @@ const baseQuery = fetchBaseQuery({
     return hearders;
   },
   // credentials: "include", // AVAILABLE VALUES "same-origin", "include" , "omit"
-  baseUrl: "http://localhost:5000/api/v1",
+  baseUrl: `${BASE_URL}/api/v1`,
 });
 
 const baseQueryWithRefreshToken: BaseQueryFn<
@@ -31,7 +32,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
   console.log("baseQueryWithRefreshToken data=>", data);
   if (data?.error?.status === 401) {
     const renewalRefreshTokenRes = await fetch(
-      "http://localhost:5000/api/v1/auth/renew-access-token",
+      `${BASE_URL}/api/v1/auth/renew-access-token`,
       {
         method: "POST",
         credentials: "include",
