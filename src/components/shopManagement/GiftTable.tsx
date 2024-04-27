@@ -240,154 +240,157 @@ export default function GiftTable() {
           )}
         </Table.Caption>
         {!isFetching && (
-          <Table.Head>
-            <Table.HeadCell
-              icon={<CheckCircle size={14} color="#8897AE" />}
-            ></Table.HeadCell>
-            <Table.HeadCell className="min-w-[150px]">
-              <p className="text-body-5 font-medium text-metal-400">Name</p>
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[70px] "
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              <div className="flex flex-col">
-                <p className="text-body-5 font-medium text-metal-500">Price</p>
-                {/* <p className="text-body-6 font-normal text-metal-500">Quantity</p> */}
-              </div>
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[70px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Quantity
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[70px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Occasion
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[100px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Recipient
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[100px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Category
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[100px"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Theme
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[100px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Brand
-            </Table.HeadCell>
-            <Table.HeadCell
-              className="min-w-[100px]"
-              // icon={<ArrowsDownUp size={14} color="#8897AE" />}
-            >
-              Created At
-            </Table.HeadCell>
-            {/* <Table.HeadCell className="min-w-[100px]" /> */}
-          </Table.Head>
-        )}
-
-        <Table.Body className="divide-gray-25 divide-y">
-          {products.map((item) => (
-            <Table.Row className="bg-white" key={item._id}>
-              <Table.Cell>
-                <Checkbox
-                  // checked =  {true}
-                  id="checked"
-                  variant="checked"
-                  onChange={(e) => {
-                    handleCheckBoxToBulkDelete(item._id, e.target.checked);
-                    // setSelectedIds(item._id)
-                    // console.log("e", e.target.checked);
-                  }}
-                  // onSelect={(e) => {
-                  //   console.log("heelo");
-                  // }}
-                />
-              </Table.Cell>
-              <Table.Cell>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      {/* <Avatar img="/images/company/paypal.png" /> */}
-                      <div onClick={() => setSelectedIds([])}>
-                        {/* {productActionDropDownList(
+          <>
+            <Table.Head>
+              <Table.HeadCell
+                icon={<CheckCircle size={14} color="#8897AE" />}
+              ></Table.HeadCell>
+              <Table.HeadCell className="min-w-[150px]">
+                <p className="text-body-5 font-medium text-metal-400">Name</p>
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[70px] "
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                <div className="flex flex-col">
+                  <p className="text-body-5 font-medium text-metal-500">
+                    Price
+                  </p>
+                  {/* <p className="text-body-6 font-normal text-metal-500">Quantity</p> */}
+                </div>
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[70px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Quantity
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[70px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Occasion
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[100px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Recipient
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[100px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Category
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[100px"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Theme
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[100px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Brand
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[100px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
+                Created At
+              </Table.HeadCell>
+              {/* <Table.HeadCell className="min-w-[100px]" /> */}
+            </Table.Head>
+            <Table.Body className="divide-gray-25 divide-y">
+              {products.map((item) => (
+                <Table.Row className="bg-white" key={item._id}>
+                  <Table.Cell>
+                    <Checkbox
+                      // checked =  {true}
+                      id="checked"
+                      variant="checked"
+                      onChange={(e) => {
+                        handleCheckBoxToBulkDelete(item._id, e.target.checked);
+                        // setSelectedIds(item._id)
+                        // console.log("e", e.target.checked);
+                      }}
+                      // onSelect={(e) => {
+                      //   console.log("heelo");
+                      // }}
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2">
+                          {/* <Avatar img="/images/company/paypal.png" /> */}
+                          <div onClick={() => setSelectedIds([])}>
+                            {/* {productActionDropDownList(
                           <p className="-mb-0.5 text-body-4 font-medium text-blue-600 hover:underline cursor-pointer">
                             {item.name}
                           </p>
                         )} */}
-                        <ViewAndUpdateGift
-                          productData={item}
-                          textContent={item.name}
-                        />
+                            <ViewAndUpdateGift
+                              productData={item}
+                              textContent={item.name}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {item.price}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-normal text-metal-500">
-                  {item.quantity}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {item.occasion}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <div className="inline-block">
-                  <Badge color="success">{item.recipient}</Badge>
-                </div>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {item.category}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {item.theme}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {item.brand}
-                </p>
-              </Table.Cell>
-              <Table.Cell>
-                <p className="text-body-5 font-medium text-metal-500">
-                  {new Date(item.createdAt).toLocaleString()}
-                </p>
-              </Table.Cell>
-              {/* <Table.Cell>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {item.price}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-normal text-metal-500">
+                      {item.quantity}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {item.occasion}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <div className="inline-block">
+                      <Badge color="success">{item.recipient}</Badge>
+                    </div>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {item.category}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {item.theme}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {item.brand}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {new Date(item.createdAt).toLocaleString()}
+                    </p>
+                  </Table.Cell>
+                  {/* <Table.Cell>
                 <Button variant="outline" size="sm" shape="circle">
                   <DotsThreeOutline size={15} />
                 </Button>
               </Table.Cell> */}
-            </Table.Row>
-          ))}
-        </Table.Body>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </>
+        )}
       </Table>
       <div className="flex justify-end">
         <PaginationComponent
