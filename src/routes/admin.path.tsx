@@ -30,7 +30,7 @@ const adminPaths: TRoutePath[] = [
       {
         name: "Customers",
         path: "customers",
-        element: <div>Get all customers</div>,
+        element: <div>Coming Soon...</div>,
       },
     ],
   },
