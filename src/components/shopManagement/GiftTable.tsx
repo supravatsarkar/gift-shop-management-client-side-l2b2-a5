@@ -231,11 +231,12 @@ export default function GiftTable() {
 
           {isFetching && (
             <Skeleton className="w-full space-y-2.5">
-              <Skeleton.Line className="h-4 w-full" />
-              <Skeleton.Line className="h-4 w-full" />
-              <Skeleton.Line className="h-4 w-full" />
-              <Skeleton.Line className="h-4 w-full" />
-              <Skeleton.Line className="h-10 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
+              <Skeleton.Line className="h-12 w-full" />
             </Skeleton>
           )}
         </Table.Caption>
