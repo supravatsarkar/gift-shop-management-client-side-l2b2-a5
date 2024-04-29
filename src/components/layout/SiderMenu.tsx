@@ -93,7 +93,9 @@ const SiderMenu = ({ collapsed }: { collapsed: boolean }) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={["0"]}
+        defaultSelectedKeys={["Dashboard"]}
+        // forceSubMenuRender={true}
+        // selectable={true}
         items={items}
       />
     </Sider>

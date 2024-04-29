@@ -199,6 +199,12 @@ export default function Managers() {
                 className="min-w-[70px]"
                 // icon={<ArrowsDownUp size={14} color="#8897AE" />}
               >
+                Last Login
+              </Table.HeadCell>
+              <Table.HeadCell
+                className="min-w-[70px]"
+                // icon={<ArrowsDownUp size={14} color="#8897AE" />}
+              >
                 Enable
               </Table.HeadCell>
               <Table.HeadCell
@@ -252,11 +258,17 @@ export default function Managers() {
                     </p>
                   </Table.Cell>
                   <Table.Cell>
+                    <p className="text-body-5 font-medium text-metal-500">
+                      {new Date(item.lastLogin).toLocaleString()}
+                    </p>
+                  </Table.Cell>
+                  <Table.Cell>
                     <Button
                       variant="outline"
                       size="sm"
                       shape="circle"
                       className="border-none"
+                      color={`${item.isEnabled ? "primary" : "error"}`}
                       onClick={() =>
                         handelUpdateManager(item._id, {
                           isEnabled: !item.isEnabled,
@@ -282,6 +294,7 @@ export default function Managers() {
                       size="sm"
                       shape="circle"
                       className="border-none"
+                      color={`${item.isVerified ? "primary" : "warning"}`}
                       onClick={() =>
                         handelUpdateManager(item._id, {
                           isVerified: !item.isVerified,

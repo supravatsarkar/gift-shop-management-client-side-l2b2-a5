@@ -13,7 +13,7 @@ export const sidebarMenuGenerator = (items: TRoutePath[], role: string) => {
       acc.push({
         key: item.name,
         icon: item?.icon,
-        label: <NavLink to={`/${role}/${item.path}`}>{item.name}</NavLink>,
+        label: item.name,
         children: item.children.map((child) => {
           return {
             key: child.name,
