@@ -232,14 +232,11 @@ export default function Managers() {
                       // checked =  {true}
                       id="checked"
                       variant="checked"
-                      onChange={(e) => {
+                      onChange={() => {
                         // handleCheckBoxToBulkDelete(item._id, e.target.checked);
                         // setSelectedIds(item._id)
                         // console.log("e", e.target.checked);
                       }}
-                      // onSelect={(e) => {
-                      //   console.log("heelo");
-                      // }}
                     />
                   </Table.Cell>
                   <Table.Cell>
