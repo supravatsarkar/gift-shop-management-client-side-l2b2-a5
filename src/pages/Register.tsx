@@ -47,15 +47,16 @@ export default function Register() {
         password: data.password,
       }).unwrap();
       console.log("registerRes res", registerRes);
-      const token = registerRes?.data?.accessToken;
-      const decodedData = decodeJwtToken(token);
-      dispatch(setUser({ user: decodedData, token: token }));
+      // const token = registerRes?.data?.accessToken;
+      // const decodedData = decodeJwtToken(token);
+      // dispatch(setUser({ user: decodedData, token: token }));
       toast.success("Register Success!", { id: toastId });
-      if (decodedData.role !== "customer") {
-        navigate(`/admin`);
-      } else {
-        navigate(`/customer`);
-      }
+      navigate(`/login`);
+      // if (decodedData.role !== "customer") {
+      //   navigate(`/admin`);
+      // } else {
+      //   navigate(`/customer`);
+      // }
     } catch (error: any) {
       console.log("login error=>", error);
       toast.error(error?.data?.message || "Something went wrong!", {

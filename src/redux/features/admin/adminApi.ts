@@ -10,6 +10,7 @@ const adminApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
+      providesTags: ["users"],
       // keepUnusedDataFor: 1,
     }),
     getCustomers: builder.query({
@@ -18,7 +19,19 @@ const adminApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    updateUserProfile: builder.mutation({
+      query: ({ id, payload }) => ({
+        url: `/user/update-user-profile/${id}`,
+        body: payload,
+        method: "PUT",
+      }),
+      invalidatesTags: ["users"],
+    }),
   }),
 });
 
-export const { useGetMangersQuery, useGetCustomersQuery } = adminApi;
+export const {
+  useGetMangersQuery,
+  useGetCustomersQuery,
+  useUpdateUserProfileMutation,
+} = adminApi;

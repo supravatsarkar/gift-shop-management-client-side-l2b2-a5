@@ -35,6 +35,9 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
     data.quantity = Number(data.quantity);
     // data.dateOfSale = new Date(data.dateOfSale).toISOString();
     console.log("dateOfSale=>", data.dateOfSale);
+    if (data.quantity > product.quantity || data.quantity <= 0) {
+      toast.error("Invalid Quantity");
+    }
     try {
       const response = await markAsSaleSubmit({
         productId: product._id,
@@ -126,6 +129,8 @@ export const ProductCard = ({ product }: { product: TProduct }) => {
                     placeholder="Enter quantity of Gift"
                     type="number"
                     className="ps-11"
+                    max={product.quantity}
+                    min={1}
                     {...register("quantity", { required: true, min: 1 })}
                   />
                   <Icon>

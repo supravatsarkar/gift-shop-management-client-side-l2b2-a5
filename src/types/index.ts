@@ -37,3 +37,16 @@ export interface TProduct {
   updatedAt: Date;
   deletedAt: Date;
 }
+
+export interface TUserDetails {
+  _id: string;
+  role: string;
+  name: string;
+  email: string;
+  phone: string;
+  createdAt: Date | string;
+  lastLogin: Date;
+  isDeleted: boolean;
+  isEnabled: boolean;
+  isVerified: boolean;
+}

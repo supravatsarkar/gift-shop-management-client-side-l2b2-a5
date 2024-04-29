@@ -11,6 +11,9 @@ export default function ProtectedRoute({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!token) {
       navigate("/login");
+    } else {
+      console.log("role", user?.role);
+      navigate(`/${user?.role}`);
     }
   }, [user, token]);
 

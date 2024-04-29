@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/auth/authSlice";
 import { decodeJwtToken } from "../utils";
 import { NavLink, useNavigate } from "react-router-dom";
+import { TUserDetails } from "@/types";
 
 export type TLoginCreds = {
   email: string;
@@ -48,14 +49,40 @@ export default function Login() {
       // });
       // loginRes = await loginRes.json();
       console.log("Login res", loginRes);
-      const token = loginRes?.data?.accessToken;
-      const decodedData = decodeJwtToken(token);
-      dispatch(setUser({ user: decodedData, token: token }));
-      toast.success("Login Success!", { id: toastId });
-      if (decodedData.role !== "customer") {
-        navigate(`/${decodedData.role}`);
+      const userDetails: TUserDetails = loginRes.data;
+      if (
+        !userDetails?.isEnabled ||
+        !userDetails?.isVerified ||
+        userDetails?.isDeleted
+      ) {
+        if (!userDetails?.isEnabled) {
+          toast.error("Your account is Disabled! Please contact with admin.", {
+            id: toastId,
+          });
+          // alert("Your account is Disabled! Please contact with admin.");
+        } else if (userDetails?.isDeleted) {
+          toast.error("Your account is Deleted! Please contact with admin.", {
+            id: toastId,
+          });
+          // alert("Your account is Deleted! Please contact with admin.");
+        } else if (!userDetails?.isVerified) {
+          toast.error("Your account is Unverified!", {
+            id: toastId,
+          });
+          // alert("Your account is Unverified! Please verify if first.");
+        }
+        return navigate(`/login`);
       } else {
-        navigate(`/customer`);
+        console.log("Else block runninggggggggggg");
+        const token = loginRes?.data?.accessToken;
+        const decodedData = decodeJwtToken(token);
+        dispatch(setUser({ user: decodedData, token: token }));
+        toast.success("Login Success!", { id: toastId });
+        if (decodedData.role !== "customer") {
+          navigate(`/${decodedData.role}`);
+        } else {
+          navigate(`/customer`);
+        }
       }
     } catch (error: any) {
       console.log("login error=>", error);

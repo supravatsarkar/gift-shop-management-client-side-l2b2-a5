@@ -24,6 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { logout } from "../../redux/features/auth/authSlice";
 import { useGetUserQuery } from "../../redux/features/auth/authApi";
+import { TUserDetails } from "@/types";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -32,9 +33,25 @@ const MainLayout = () => {
   const location = useLocation();
   console.log({ location });
   const user = useSelector((state: RootState) => state.auth.user);
-  const { data: userDetails } = useGetUserQuery(undefined);
-  console.log({ userDetails });
+  const { data } = useGetUserQuery(undefined, {
+    pollingInterval: 20000,
+    skipPollingIfUnfocused: true,
+  });
+  const userDetails: TUserDetails = data?.data;
+  console.log("userDetails=>", userDetails);
   const dispatch = useDispatch();
+
+  if (
+    userDetails?.email &&
+    (!userDetails?.isEnabled ||
+      userDetails?.isDeleted ||
+      !userDetails?.isVerified)
+  ) {
+    console.log("userDetails.isEnable ", userDetails?.isEnabled);
+    console.log("userDetails.isDeleted ", userDetails?.isDeleted);
+    console.log("userDetails.isVerified ", userDetails?.isVerified);
+    dispatch(logout());
+  }
 
   //   const {
   //     token: { colorBgContainer, borderRadiusLG },
